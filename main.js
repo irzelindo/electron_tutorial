@@ -1,15 +1,36 @@
 // Modules
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, Menu, MenuItem} = require('electron')
 
+// const color = require('colors');
+
+// const bcrypt = require('bcrypt');
+
+// bcrypt.hash('my-password', 10, (err, hash) => {
+//   console.log(hash)
+// });
+
+// console.log(color.rainbow('Hello World'));
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+
+let mainMenu = new Menu.buildFromTemplate([{
+  label: "Electron",
+  submenu: [
+    { role: 'undo' },
+    { role: 'redo' },
+    { type: 'separator' },
+    { role: 'cut' },
+    { role: 'copy' },
+    { role: 'paste' }
+  ]
+}])
 
 // Create a new BrowserWindow when `app` is ready
 function createWindow () {
 
   mainWindow = new BrowserWindow({
-    width: 1000, height: 800,
+    width: 800, height: 600,
     webPreferences: {
       // --- !! IMPORTANT !! ---
       // Disable 'contextIsolation' to allow 'nodeIntegration'
@@ -24,6 +45,9 @@ function createWindow () {
 
   // Open DevTools - Remove for PRODUCTION!
   mainWindow.webContents.openDevTools();
+
+  //Add custom menu to app
+  Menu.setApplicationMenu(mainMenu);
 
   // Listen for window being closed
   mainWindow.on('closed',  () => {
