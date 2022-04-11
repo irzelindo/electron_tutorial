@@ -7,6 +7,8 @@ const windowStateKeeper = require('electron-window-state');
 
 const readItem = require('./readItem');
 
+const updater = require('./updater');
+
 // const color = require('colors');
 
 // const bcrypt = require('bcrypt');
@@ -43,6 +45,9 @@ ipcMain.on('new-item', (e, itemUrl) => {
 
 // Create a new BrowserWindow when `app` is ready
 function createWindow () {
+
+  // Check for app updates after 3 seconds
+  setTimeout( updater, 3000);
 
   // Create a state keeper
   let state = windowStateKeeper({

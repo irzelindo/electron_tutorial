@@ -10,7 +10,7 @@
     "build": "electron-builder -w",
     "release": "electron-builder -w -p onTagOrDraft",
     "win-cert": "electron-builder create-self-signed-cert -p irzelindo",
-    "win-env": "$env:GH_TOKEN='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'"
+    "win-env": "$env:GH_TOKEN='xxxxx'"
   },
   "repository": "https://github.com/irzelindo/electron_tutorial.git",
   "homepage": "https://github.com/irzelindo/electron_tutorial",
@@ -27,6 +27,7 @@
     "nodemon": "^2.0.0"
   },
   "dependencies": {
+    "electron-log": "^4.4.6",
     "electron-updater": "^5.0.1",
     "electron-window-state": "^5.0.3",
     "wine": "^0.9.13"
