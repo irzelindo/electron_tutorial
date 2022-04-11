@@ -1,5 +1,11 @@
 // Modules
-const {app, BrowserWindow, Menu, MenuItem} = require('electron')
+const {app, BrowserWindow, ipcMain} = require('electron');
+
+const appMenu = require('./menu');
+
+const windowStateKeeper = require('electron-window-state');
+
+const readItem = require('./readItem');
 
 // const color = require('colors');
 
@@ -12,42 +18,74 @@ const {app, BrowserWindow, Menu, MenuItem} = require('electron')
 // console.log(color.rainbow('Hello World'));
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
+let mainWindow;
 
-let mainMenu = new Menu.buildFromTemplate([{
-  label: "Electron",
-  submenu: [
-    { role: 'undo' },
-    { role: 'redo' },
-    { type: 'separator' },
-    { role: 'cut' },
-    { role: 'copy' },
-    { role: 'paste' }
-  ]
-}])
+// let mainMenu = new Menu.buildFromTemplate([{
+//   label: "Electron",
+//   submenu: [
+//     { role: 'undo' },
+//     { role: 'redo' },
+//     { type: 'separator' },
+//     { role: 'cut' },
+//     { role: 'copy' },
+//     { role: 'paste' }
+//   ]
+// }]);
+
+// Listen for new item request
+ipcMain.on('new-item', (e, itemUrl) => {
+
+  // Get new item and send back to renderer
+  readItem( itemUrl, item => {
+    e.sender.send('new-item-success', item);
+  })
+});
 
 // Create a new BrowserWindow when `app` is ready
 function createWindow () {
 
+  // Create a state keeper
+  let state = windowStateKeeper({
+    defaultHeight: 650,
+    defaultWidth: 500,
+    minWidth: 350,
+    maxWidth: 650,
+    minHeight: 300
+  });
+
   mainWindow = new BrowserWindow({
-    width: 800, height: 600,
+    x: state.x, 
+    y: state.y,
+    width: state.width, 
+    height: state.height,
+    minWidth: state.minWidth,
+    maxWidth: state.maxWidth,
+    minHeight: state.minHeight,
+    // icon:__dirname+'\\build\\icon.ico',
     webPreferences: {
       // --- !! IMPORTANT !! ---
       // Disable 'contextIsolation' to allow 'nodeIntegration'
       // 'contextIsolation' defaults to "true" as from Electron v12
-      contextIsolation: false,
+      // contextIsolation: false,
       nodeIntegration: true
     }
-  })
+  });
+
+  // console.log(__dirname+'\\build\\app_icon_tr.ico');
+  // Create main app menu
+  appMenu(mainWindow.webContents);
 
   // Load index.html into the new BrowserWindow
-  mainWindow.loadFile('index.html')
+  mainWindow.loadFile('renderer/main.html')
+
+  // Manage new window state
+  state.manage(mainWindow);
 
   // Open DevTools - Remove for PRODUCTION!
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   //Add custom menu to app
-  Menu.setApplicationMenu(mainMenu);
+  // Menu.setApplicationMenu(mainMenu);
 
   // Listen for window being closed
   mainWindow.on('closed',  () => {
