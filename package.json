@@ -8,7 +8,9 @@
     "watch": "nodemon --exec electron .",
     "reset": "git reset --hard",
     "build": "electron-builder -w",
-    "win-cert": "electron-builder create-self-signed-cert -p irzelindo"
+    "release": "electron-builder -w -p onTagOrDraft",
+    "win-cert": "electron-builder create-self-signed-cert -p irzelindo",
+    "win-env":"$env:GH_TOKEN='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'"
   },
   "repository": "https://github.com/irzelindo/electron_tutorial.git",
   "homepage": "https://github.com/irzelindo/electron_tutorial",
@@ -31,8 +33,10 @@
   "build": {
     "appId": "com.irzelindo.readit",
     "copyright": "Copyright Irzelindo",
+    "publish": {
+      "provider": "github"
+    },
     "mac": {
-      
     },
     "win": {
       "certificateFile": "private/irzelindo.pfx",
