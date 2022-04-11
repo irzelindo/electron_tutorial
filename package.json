@@ -8,16 +8,16 @@
     "watch": "nodemon --exec electron .",
     "reset": "git reset --hard",
     "build": "electron-builder -w",
-    "win-cert": "electron-builder create-self-signed-cert -p stackacademytv"
+    "win-cert": "electron-builder create-self-signed-cert -p irzelindo"
   },
-  "repository": "https://github.com/stackacademytv/master-electron",
-  "homepage": "https://github.com/stackacademytv/master-electron",
+  "repository": "https://github.com/irzelindo/electron_tutorial.git",
+  "homepage": "https://github.com/irzelindo/electron_tutorial",
   "keywords": [
     "Electron",
     "Master Electron",
     "demo"
   ],
-  "author": "Stackacademytv",
+  "author": "Irzelindo",
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^9.0.0",
@@ -29,16 +29,16 @@
     "wine": "^0.9.13"
   },
   "build": {
-    "appId": "com.stackacademytv.readit",
-    "copyright": "Copyright Stackacademy.tv",
+    "appId": "com.irzelindo.readit",
+    "copyright": "Copyright Irzelindo",
     "mac": {
       
     },
     "win": {
-      "certificateFile": "private/stackacademytv.pfx",
+      "certificateFile": "private/irzelindo.pfx",
       "certificatePassword": "",
       "verifyUpdateCodeSignature": false,
-      "publisherName": "stackacademytv"
+      "publisherName": "irzelindo"
     },
     "linux": {
       
