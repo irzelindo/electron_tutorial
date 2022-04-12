@@ -63,6 +63,9 @@ module.exports = appWin => {
                     }
                 }
             ]
+        },
+        {
+            role: 'about',
         }
     ];
 
